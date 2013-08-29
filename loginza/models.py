@@ -60,8 +60,8 @@ class UserMapManager(models.Manager):
                         break
 
                 user = User.objects.create_user(
-                    username,
-                    email
+                    email,
+                    username
                 )
             user_map = UserMap.objects.create(identity=identity, user=user)
             signals.created.send(request, user_map=user_map)
