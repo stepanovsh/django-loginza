@@ -42,6 +42,7 @@ def return_callback(request):
     response = redirect(_return_path(request))
     if request.user.is_anonymous():
         user = auth.authenticate(user_map=user_map)
+        login(request, user)
         results = signals.authenticated.send(request, user=user, identity=identity)
         for callback, result in results:
             if isinstance(result, http.HttpResponse):
