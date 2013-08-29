@@ -63,6 +63,8 @@ class UserMapManager(models.Manager):
                     email,
                     username
                 )
+                user.first_name = username
+                user.save()
             user_map = UserMap.objects.create(identity=identity, user=user)
             signals.created.send(request, user_map=user_map)
         return user_map
