@@ -87,7 +87,7 @@ class UserMapManager(models.Manager):
 
                 user = User.objects.create_user(
                     email,
-                    username
+                    email
                 )
                 user.first_name = username
                 user.save()
