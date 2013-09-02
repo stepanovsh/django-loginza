@@ -27,10 +27,13 @@ class IdentityManager(models.Manager):
             )
         return identity
 
-    def get_name_and_photo_from_loginza_data(self, loginza_data, user):
+    def get_name_and_photo_from_loginza_data(self, identity, user):
+        loginza_data = json.loads(identity.data)
+        # get all variables
         name = loginza_data.get('name', loginza_data.get('full_name', None))
         nickname = loginza_data.get('nickname', None)
         photo = loginza_data.get('photo', None)
+
         if name:
             first_name = name.get('first_name', None)
             last_name = name.get('last_name', None)
@@ -77,19 +80,18 @@ class UserMapManager(models.Manager):
                 # check duplicate user name
                 while True:
                     try:
-                        existing_user = User.objects.get(username=username)
+                        existing_user = User.objects.get(email=email)
                         username = '%s%d' % (username, existing_user.id)
+                        if existing_user.email == settings.DEFAULT_EMAIL:
+                                email = '@'.join([username, email.split('@')[-1]])
                     except User.DoesNotExist:
                         break
 
-                if email.split('@')[-1] in settings.DEFAULT_EMAIL:
-                    email = '@'.join([username.split('@')[0],email.split('@')[-1]])
 
                 user = User.objects.create_user(
                     email,
-                    email
+                    username
                 )
-                user.first_name = username
                 user.save()
             user_map = UserMap.objects.create(identity=identity, user=user)
             signals.created.send(request, user_map=user_map)

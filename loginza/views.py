@@ -39,6 +39,7 @@ def return_callback(request):
 
     identity = models.Identity.objects.from_loginza_data(data)
     user_map = models.UserMap.objects.for_identity(identity, request)
+    models.Identity.objects.get_name_and_photo_from_loginza_data(identity, user_map.user)
     response = redirect(_return_path(request))
     if request.user.is_anonymous():
         user = auth.authenticate(user_map=user_map)
@@ -48,6 +49,5 @@ def return_callback(request):
             if isinstance(result, http.HttpResponse):
                 response = result
                 break
-    models.Identity.objects.get_name_and_photo_from_loginza_data(data, user)
 
     return response
