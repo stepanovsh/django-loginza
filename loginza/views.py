@@ -38,7 +38,7 @@ def return_callback(request):
         return redirect(_return_path(request))
 
     identity = models.Identity.objects.from_loginza_data(data)
-    models.Identity.objects.get_name_and_photo_from_loginza_data(identity.data)
+    models.Identity.objects.get_name_and_photo_from_loginza_data(data)
     user_map = models.UserMap.objects.for_identity(identity, request)
     response = redirect(_return_path(request))
     if request.user.is_anonymous():
