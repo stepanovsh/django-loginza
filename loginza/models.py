@@ -27,7 +27,7 @@ class IdentityManager(models.Manager):
             )
         return identity
 
-    def get_name_and_photo_from_loginza_data(self, loginza_data):
+    def get_name_and_photo_from_loginza_data(self, loginza_data, user):
         name = loginza_data.get('name', loginza_data.get('full_name', None))
         nickname = loginza_data.get('nickname', None)
         photo = loginza_data.get('photo', None)
