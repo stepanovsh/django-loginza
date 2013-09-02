@@ -27,6 +27,30 @@ class IdentityManager(models.Manager):
             )
         return identity
 
+    def get_name_and_photo_from_loginza_data(self, loginza_data):
+        name = loginza_data.get('name', loginza_data.get('full_name', None))
+        nickname = loginza_data.get('nickname', None)
+        photo = loginza_data.get('photo', None)
+        if name:
+            first_name = name.get('firs_name', None)
+            last_name = name.get('last_name', None)
+            full_name = name.get('full_name', None)
+        user = self.user
+        if first_name:
+            user.first_name = first_name
+        elif full_name:
+            user.first_name = full_name
+        elif nickname:
+            user.first_name = nickname
+        else:
+            pass
+        if last_name:
+            user.last_name = last_name
+        if photo:
+            user.set_photo_from_url(photo)
+        user.save()
+        return ''
+
 
 class UserMapManager(models.Manager):
     def for_identity(self, identity, request):
@@ -58,6 +82,9 @@ class UserMapManager(models.Manager):
                         username = '%s%d' % (username, existing_user.id)
                     except User.DoesNotExist:
                         break
+
+                if email.split('@')[-1] in settings.DEFAULT_EMAIL:
+                    email = '@'.join([username.split('@')[0],email.split('@')[-1]])
 
                 user = User.objects.create_user(
                     email,
