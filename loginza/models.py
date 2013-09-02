@@ -35,7 +35,6 @@ class IdentityManager(models.Manager):
             first_name = name.get('firs_name', None)
             last_name = name.get('last_name', None)
             full_name = name.get('full_name', None)
-        user = self.usermap__set.all()[0]
         if first_name:
             user.first_name = first_name
         elif full_name:
