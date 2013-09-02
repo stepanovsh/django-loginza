@@ -32,7 +32,7 @@ class IdentityManager(models.Manager):
         nickname = loginza_data.get('nickname', None)
         photo = loginza_data.get('photo', None)
         if name:
-            first_name = name.get('firs_name', None)
+            first_name = name.get('first_name', None)
             last_name = name.get('last_name', None)
             full_name = name.get('full_name', None)
         if first_name:
