@@ -23,7 +23,7 @@ ICONS_PROVIDERS = getattr(settings, 'LOGINZA_ICONS_PROVIDERS', None)
 PROVIDER_TITLES = getattr(settings, 'LOGINZA_PROVIDER_TITLES', {})
 
 # Default email that will be used for new users when loginza data does not have one.
-DEFAULT_EMAIL = getattr(settings, 'LOGINZA_DEFAULT_EMAIL', 'user@loginza')
+DEFAULT_EMAIL = getattr(settings, 'LOGINZA_DEFAULT_EMAIL', 'user@loginza.loginza')
 
 # List or tuple of paths, that will not be stored for return.
 AMNESIA_PATHS = getattr(settings, 'LOGINZA_AMNESIA_PATHS', ())
