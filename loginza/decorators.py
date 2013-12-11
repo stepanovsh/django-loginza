@@ -47,7 +47,7 @@ def _user_anonymous_callback(request):
     if response is None:
         referer = request.META.get('HTTP_REFERER', '/')
         domain = Site.objects.get_current().domain
-        abs_url = 'http://%s' % domain
+        abs_url = 'https://%s' % domain
 
         back_url = referer.replace(abs_url, '')
         response = http.HttpResponseRedirect(back_url if request.path != back_url else '/')

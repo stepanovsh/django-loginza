@@ -44,7 +44,7 @@ def _return_path(request, path=None):
 
 
 def _absolute_url(url):
-    return 'http://%s%s' % (Site.objects.get_current().domain, url)
+    return 'https://%s%s' % (Site.objects.get_current().domain, url)
 
 
 def return_url():
