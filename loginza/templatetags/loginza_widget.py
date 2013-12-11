@@ -97,7 +97,7 @@ style="width:%(width)s;height:%(height)s;" scrolling="no" frameborder="no" %(id)
 
 
 def button_template(kwargs, caption):
-    return """<script src="https://loginza.ru/js/widget.js" type="text/javascript"></script>
+    return """<script src="http://loginza.ru/js/widget.js" type="text/javascript"></script>
 <a href="https://loginza.ru/api/widget?%(providers)slang=%(lang)s&token_url=%(return-url)s" rel="nofollow" class="loginza" %(id)s>
     <img src="%(button-img)s" alt="%(caption)s" title="%(caption)s"/>
 </a>""" % {
