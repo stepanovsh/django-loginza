@@ -83,7 +83,7 @@ def id_attr(kwargs):
 
 
 def iframe_template(kwargs, caption=''):
-    return """<script src="https://loginza.ru/js/widget.js" type="text/javascript"></script>
+    return """<script src="http://loginza.ru/js/widget.js" type="text/javascript"></script>
 <iframe src="https://loginza.ru/api/widget?overlay=loginza&%(providers)slang=%(lang)s&token_url=%(return-url)s"
 style="width:%(width)s;height:%(height)s;" scrolling="no" frameborder="no" %(id)s></iframe>""" % {
         'return-url': return_url(),
