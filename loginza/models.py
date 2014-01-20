@@ -92,7 +92,6 @@ class UserMapManager(models.Manager):
                     username
                 )
                 user.save()
-                user.calculate_raiting_loginza()
             user_map = UserMap.objects.create(identity=identity, user=user)
             signals.created.send(request, user_map=user_map)
         return user_map
