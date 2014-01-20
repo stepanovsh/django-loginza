@@ -133,6 +133,7 @@ class UserMap(models.Model):
 def create_usermap(sender, created, instance, **kwargs):
     if created:
         if sender == UserMap:
-            instance.user.calculate_first_loginza()
+            instance.user.rating = 15
+            instance.user.save()
 
 models.signals.post_save.connect(create_usermap, sender=UserMap)
