@@ -128,11 +128,3 @@ class UserMap(models.Model):
         ordering = ['user']
         verbose_name = _('user map')
         verbose_name_plural = _('user maps')
-
-
-def create_usermap(sender, created, instance, **kwargs):
-    if created:
-        if sender == UserMap:
-            instance.user.calculate_first_loginza()
-
-models.signals.post_save.connect(create_usermap, sender=UserMap)
