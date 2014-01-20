@@ -135,4 +135,4 @@ def create_usermap(sender, created, instance, **kwargs):
         if sender == UserMap:
             instance.user.calculate_first_loginza()
 
-models.signals.post_save.connect(create_notification, sender=UserMap)
+models.signals.post_save.connect(create_usermap, sender=UserMap)
