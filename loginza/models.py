@@ -87,12 +87,12 @@ class UserMapManager(models.Manager):
                     except User.DoesNotExist:
                         break
 
-
                 user = User.objects.create_user(
                     email,
                     username
                 )
                 user.save()
+                user.calculate_raiting_loginza()
             user_map = UserMap.objects.create(identity=identity, user=user)
             signals.created.send(request, user_map=user_map)
         return user_map
@@ -128,3 +128,11 @@ class UserMap(models.Model):
         ordering = ['user']
         verbose_name = _('user map')
         verbose_name_plural = _('user maps')
+
+
+def create_usermap(sender, created, instance, **kwargs):
+    if created:
+        if sender == UserMap:
+            instance.user.calculate_first_loginza()
+
+models.signals.post_save.connect(create_notification, sender=UserMap)
