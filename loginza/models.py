@@ -62,7 +62,8 @@ class UserMapManager(models.Manager):
             # if there is authenticated user - map identity to that user
             # if not - create new user and mapping for him
             if request.user.is_authenticated():
-                user = request.user
+                #user = request.user
+                pass
             else:
                 loginza_data = json.loads(identity.data)
 
