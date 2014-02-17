@@ -7,10 +7,13 @@ else:
     User = get_user_model()
 from django.db import models
 from django.utils import simplejson as json
+from django.dispatch import receiver
+from django.db.models.signals import post_delete
 from django.utils.translation import ugettext_lazy as _
 
 from loginza import signals
 from loginza.conf import settings
+
 
 class IdentityManager(models.Manager):
     def from_loginza_data(self, loginza_data):
@@ -128,3 +131,9 @@ class UserMap(models.Model):
         ordering = ['user']
         verbose_name = _('user map')
         verbose_name_plural = _('user maps')
+
+
+@receiver(post_delete, sender=UserMap)
+def post_delete_user(sender, instance, *args, **kwargs):
+    if instance.identity:
+        instance.identity.delete()
