@@ -61,38 +61,38 @@ class UserMapManager(models.Manager):
         except self.model.DoesNotExist:
             # if there is authenticated user - map identity to that user
             # if not - create new user and mapping for him
-            if request.user.is_authenticated():
-                #user = request.user
-                pass
+            # if request.user.is_authenticated():
+            #     #user = request.user
+            #     pass
+            # else:
+            loginza_data = json.loads(identity.data)
+
+            loginza_email = loginza_data.get('email', '')
+            email = loginza_email if '@' in loginza_email else settings.DEFAULT_EMAIL
+
+            # if nickname is not set - try to get it from email
+            # e.g. vgarvardt@gmail.com -> vgarvardt
+            loginza_nickname = loginza_data.get('nickname', None)
+            if loginza_nickname is None or loginza_nickname == "":
+                username = email.split('@')[0]
             else:
-                loginza_data = json.loads(identity.data)
+                username = loginza_nickname
 
-                loginza_email = loginza_data.get('email', '')
-                email = loginza_email if '@' in loginza_email else settings.DEFAULT_EMAIL
+            # check duplicate user name
+            while True:
+                try:
+                    existing_user = User.objects.get(email=email)
+                    username = '%s%d' % (username, existing_user.id)
+                    if existing_user.email == settings.DEFAULT_EMAIL:
+                            email = '@'.join([username, email.split('@')[-1]])
+                except User.DoesNotExist:
+                    break
 
-                # if nickname is not set - try to get it from email
-                # e.g. vgarvardt@gmail.com -> vgarvardt
-                loginza_nickname = loginza_data.get('nickname', None)
-                if loginza_nickname is None or loginza_nickname == "":
-                    username = email.split('@')[0]
-                else:
-                    username = loginza_nickname
-
-                # check duplicate user name
-                while True:
-                    try:
-                        existing_user = User.objects.get(email=email)
-                        username = '%s%d' % (username, existing_user.id)
-                        if existing_user.email == settings.DEFAULT_EMAIL:
-                                email = '@'.join([username, email.split('@')[-1]])
-                    except User.DoesNotExist:
-                        break
-
-                user = User.objects.create_user(
-                    email,
-                    username
-                )
-                user.save()
+            user = User.objects.create_user(
+                email,
+                username
+            )
+            user.save()
             user_map = UserMap.objects.create(identity=identity, user=user)
             signals.created.send(request, user_map=user_map)
         return user_map
