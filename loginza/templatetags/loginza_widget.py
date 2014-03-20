@@ -123,7 +123,7 @@ def icons_template(kwargs, caption):
             if provider in settings.ICONS_IMG_URLS:
                 img_url = settings.ICONS_IMG_URLS[provider]
             else:
-                img_url = 'https://loginza.ru/img/widget/%s_ico.gif' % provider
+                img_url = 'http://loginza.ru/img/widget/%s_ico.gif' % provider
 
             imgs.append('<img src="%(img_url)s" alt="%(title)s" title="%(title)s">' % {
                 'img_url': img_url,
