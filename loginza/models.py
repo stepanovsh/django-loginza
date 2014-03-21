@@ -53,7 +53,7 @@ class IdentityManager(models.Manager):
             user.last_name = last_name
         if photo:
             user.set_photo_from_url(photo)
-        user.save()
+        user.save(update_fields=['first_name', 'last_name'])
         return ''
 
 
