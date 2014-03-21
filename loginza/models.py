@@ -48,7 +48,7 @@ class IdentityManager(models.Manager):
         elif nickname:
             user.first_name = nickname
         else:
-            user.first_name = 'noname{}'.format(user.id)
+            user.first_name = 'noname{}'.format(user.user_map_set.get().id)
         if last_name:
             user.last_name = last_name
         if photo:
