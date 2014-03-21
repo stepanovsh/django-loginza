@@ -27,7 +27,7 @@ def return_callback(request):
         sig = md5(token + settings.API_SIGNATURE).hexdigest()
         params.update(id=settings.WIDGET_ID, sig=sig)
 
-    f = urlopen('http://loginza.ru/api/authinfo?%s' % urlencode(params))
+    f = urlopen('https://loginza.ru/api/authinfo?%s' % urlencode(params))
     result = f.read()
     f.close()
 
