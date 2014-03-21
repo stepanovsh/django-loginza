@@ -51,8 +51,8 @@ class IdentityManager(models.Manager):
             user.first_name = 'noname{}'.format(user.user_map_set.get().id)
         if last_name:
             user.last_name = last_name
-        if photo:
-            user.set_photo_from_url(photo)
+        # if photo:
+        #     user.set_photo_from_url(photo)
         user._default_manager.filter(id=user.id).update(first_name=user.first_name, last_name=user.last_name)
         return ''
 
